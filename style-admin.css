@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #df8536, #fbf2ea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: rgb(129, 43, 6);
+}
+
+.container {
+  width: 95%;
+  max-width: 1100px;
+  backdrop-filter: blur(15px);
+  background: rgba(227, 213, 201, 0.97);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(28, 16, 4, 0.3);
+  padding: 30px;
+  overflow-x: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: rgba(233, 186, 155, 0.816);
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(207, 176, 176, 0.1);
+}
+
+.status.pending {
+  color: #d11815;
+  font-weight: bold;
+}
+
+.status.resolved {
+  color: #056c0a;
+  font-weight: bold;
+}
+
+.resolve-btn {
+  background: linear-gradient(90deg, #c82c14, #631c1c);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.resolve-btn:hover {
+  background: linear-gradient(90deg, #34e852, #72e05e);
+  transform: scale(1.05);
+}
+
+.resolve-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}

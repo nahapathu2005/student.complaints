@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Complaint System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #9a7c52, #93541d);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .login-container input::placeholder {
+      color: #f0f0f0;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #28a745;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #218838;
+    }
+
+    .signup-text {
+      margin-top: 15px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .signup-text a {
+      color: #cce5ff;
+      text-decoration: none;
+    }
+
+    .signup-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    <form id="adminLoginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+      <p class="signup-text">Don't have an account? <a href="./admin_signup.html">Create here</a></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("adminLoginForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("/admin-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Save admin ID in localStorage (optional) and redirect to dashboard
+          localStorage.setItem("admin_id", data.admin_id);
+          window.location.href = "/admin-dashboard"; // ✅ Correct route
+        } else {
+          alert(data.message || "Login failed. Try again.");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Login failed. Try again.");
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Complaint System</title>
+  <link rel="stylesheet" href="./admin_dashboard.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .status.pending {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .status.resolved {
+      color: green;
+      font-weight: bold;
+    }
+
+    button.resolve-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+
+    button.resolve-btn:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Complaint Dashboard</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Student Name</th>
+          <th>Roll No</th>
+          <th>Complaint Type</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="complaintBody">
+        <tr><td colspan="7">Loading complaints...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const complaintBody = document.getElementById('complaintBody');
+
+    // Fetch all complaints from server
+    async function loadComplaints() {
+      try {
+        const res = await fetch('/all-complaints');
+        const data = await res.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          complaintBody.innerHTML = `<tr><td colspan="7">No complaints found</td></tr>`;
+          return;
+        }
+
+        complaintBody.innerHTML = ''; // clear table
+        data.forEach((complaint, index) => {
+          const row = document.createElement('tr');
+
+          row.innerHTML = `
+            <td>${complaint.id}</td>
+            <td>${complaint.name}</td>
+            <td>${complaint.roll_no}</td>
+            <td>${complaint.complaint_type}</td>
+            <td>${complaint.complaint_text}</td>
+            <td class="status ${complaint.status === 'Resolved' ? 'resolved' : 'pending'}">${complaint.status || 'Pending'}</td>
+            <td>
+              <button class="resolve-btn" ${complaint.status === 'Resolved' ? 'disabled' : ''}>Mark Resolved</button>
+            </td>
+          `;
+
+          // Handle resolve button
+          const btn = row.querySelector('.resolve-btn');
+          btn.addEventListener('click', async () => {
+            try {
+              // For simplicity, we just update status on front-end
+              // You can later add an API to update DB
+              row.querySelector('.status').textContent = 'Resolved';
+              row.querySelector('.status').classList.remove('pending');
+              row.querySelector('.status').classList.add('resolved');
+              btn.disabled = true;
+              btn.textContent = 'Done';
+            } catch (err) {
+              alert('Error updating complaint');
+              console.error(err);
+            }
+          });
+
+          complaintBody.appendChild(row);
+        });
+      } catch (err) {
+        complaintBody.innerHTML = `<tr><td colspan="7">Error loading complaints</td></tr>`;
+        console.error(err);
+      }
+    }
+
+    loadComplaints();
+  </script>
+</body>
+</html>

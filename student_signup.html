@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Signup - Complaint System</title>
+  <link rel="stylesheet" href="style-dashboard.css">
+  <style>
+    .signup-container {
+      width: 380px;
+      margin: 8% auto;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    h2 {
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Student Signup</h2>
+    <form id="studentSignupForm">
+      <input type="text" id="name" placeholder="Full Name" required><br>
+      <input type="text" id="roll_no" placeholder="Roll Number" required><br>
+      <input type="text" id="department" placeholder="Department" required><br>
+      <input type="text" id="username" placeholder="Username" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("studentSignupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        roll_no: document.getElementById("roll_no").value,
+        department: document.getElementById("department").value,
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      };
+
+      // ✅ Corrected to match your Express route and port (3000)
+      const res = await fetch("/student-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        alert("Student registered successfully!");
+        window.location.href = "student_login.html";
+      } else {
+        alert("Error: " + (result.message || "Signup failed!"));
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+html{
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #dc7113e5, #d8b88d);
+}
+
+/* ===== Container ===== */
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Login Box ===== */
+.login-box {
+  background: rgb(213, 197, 186);
+  backdrop-filter: blur(20px);
+  width: 370px;
+  padding: 40px 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(58, 24, 3, 0.1);
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.login-box .logo img {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.login-box h2 {
+  color: #462105;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.login-box p {
+  color: #492405;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* ===== Input Fields ===== */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background: #dabdb0;
+  font-size: 14px;
+}
+
+.input-group label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #5a1f0c;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  background: #ba916b;
+  padding: 0 5px;
+  color: #8e6326;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d5741a, #e8af94);
+  border: none;
+  color: rgb(58, 29, 6);
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #e1ac94, #d09b7c);
+  transform: translateY(-2px);
+}
+
+/* ===== Links ===== */
+.options {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.options a,
+.signup-text a {
+  color: #391a09;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.options a:hover,
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+.signup-text {
+  font-size: 13px;
+  color: #192734e9;
+  margin-top: 20px;
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+}
